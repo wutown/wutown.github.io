@@ -23,7 +23,8 @@
         function showPosition(position) {
             var latitude = position.coords.latitude;
             var longitude = position.coords.longitude;
-            document.getElementById("demo").innerHTML = "Latitude: " + latitude + "<br>Longitude: " + longitude;
+            var googleApiFormat = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=YOUR_API_KEY`;
+            document.getElementById("demo").innerHTML = "Google Maps API Format: " + googleApiFormat;
         }
     </script>
 </body>
