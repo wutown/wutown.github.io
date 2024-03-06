@@ -1,7 +1,7 @@
 // config.js
 
 const config = {
-    apiKey: 'YOUR_API_KEY'
+    apiKey: 'AIzaSyDR2rqeP55_tldFPuZUbksr5nvosp12Fyw'
 };
 
 export default config;
