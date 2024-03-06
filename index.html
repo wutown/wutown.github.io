@@ -11,6 +11,8 @@
 
     <p id="demo"></p>
 
+    <a id="directionsLink" href="" target="_blank">Get Directions to Your Location</a>
+
     <script>
         function getLocation() {
             if (navigator.geolocation) {
@@ -25,6 +27,14 @@
             var longitude = position.coords.longitude;
             var googleApiFormat = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=YOUR_API_KEY`;
             document.getElementById("demo").innerHTML = "Google Maps API Format: " + googleApiFormat;
+
+            // Set the other person's location (101 Building)
+            var otherPersonLat = 25.033964;
+            var otherPersonLng = 121.564472;
+
+            // Create the directions link
+            var directionsLink = document.getElementById("directionsLink");
+            directionsLink.href = `https://www.google.com/maps/dir/${otherPersonLat},${otherPersonLng}/${latitude},${longitude}`;
         }
     </script>
 </body>
