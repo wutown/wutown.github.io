@@ -6,13 +6,13 @@
     <title>Get Current Location</title>
 </head>
 <body>
-    <h1>怎麼去101，我教你阿!!:</h1>
-    <button onclick="getDirections()">Get Directions</button>
+    <h1>Click the button to get your current location and open Google Maps:</h1>
+    <button onclick="openGoogleMaps()">Open Google Maps</button>
 
     <p id="demo"></p>
 
     <script>
-        function getDirections() {
+        function openGoogleMaps() {
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(function(position) {
                     var latitude = position.coords.latitude;
@@ -23,12 +23,22 @@
                     var otherPersonLng = 121.564472;
 
                     // Create the directions link
-                    var directionsLink = `https://www.google.com/maps/dir/${otherPersonLat},${otherPersonLng}/${latitude},${longitude}`;
-                    
-                    // Open the directions link in a new tab
-                    window.open(directionsLink, '_blank');
+                    var directionsLink = `https://www.google.com/maps/dir/?api=1&destination=${otherPersonLat},${otherPersonLng}&travelmode=driving`;
 
-                    document.getElementById("demo").innerHTML = "Directions opened in a new tab.";
+                    // Open Google Maps app or website
+                    var userAgent = navigator.userAgent || navigator.vendor || window.opera;
+                    if (/android/i.test(userAgent)) {
+                        // Open in Google Maps app on Android
+                        window.open(`geo:${otherPersonLat},${otherPersonLng}`, '_blank');
+                    } else if (/iPad|iPhone|iPod/.test(userAgent)) {
+                        // Open in Apple Maps if Google Maps not installed on iOS
+                        window.open(`maps://?saddr=${latitude},${longitude}&daddr=${otherPersonLat},${otherPersonLng}`, '_blank');
+                    } else {
+                        // Open in Google Maps website on other devices
+                        window.open(directionsLink, '_blank');
+                    }
+
+                    document.getElementById("demo").innerHTML = "Google Maps opened.";
                 }, function(error) {
                     document.getElementById("demo").innerHTML = "Error occurred while getting your location: " + error.message;
                 });
