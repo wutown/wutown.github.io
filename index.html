@@ -3,30 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Navigation Example</title>
+    <title>Get Current Location</title>
 </head>
 <body>
-    <h1>Navigation Example</h1>
+    <h1>Click the button to get your current location:</h1>
+    <button onclick="getLocation()">Get Location</button>
 
-    <button onclick="startNavigation()">Start Navigation</button>
+    <p id="demo"></p>
 
-    <script src="config.js"></script>
+    <a id="directionsLink" href="" target="_blank">Get Directions to Your Location</a>
+
     <script>
-        function startNavigation() {
+        function getLocation() {
             if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(showNavigation);
+                navigator.geolocation.getCurrentPosition(showPosition);
             } else {
-                alert("Geolocation is not supported by this browser.");
+                document.getElementById("demo").innerHTML = "Geolocation is not supported by this browser.";
             }
         }
 
-        function showNavigation(position) {
+        function showPosition(position) {
             var latitude = position.coords.latitude;
             var longitude = position.coords.longitude;
-            var destination = "25.033964,121.564472"; // 101 Building
 
-            var navigationUrl = `https://www.google.com/maps/dir/?api=1&origin=${latitude},${longitude}&destination=${destination}&travelmode=driving&key=${config.apiKey}`;
-            window.location.href = navigationUrl;
+            // Set the other person's location (101 Building)
+            var otherPersonLat = 25.033964;
+            var otherPersonLng = 121.564472;
+
+            // Create the directions link
+            var directionsLink = document.getElementById("directionsLink");
+            directionsLink.href = `https://www.google.com/maps/dir/${otherPersonLat},${otherPersonLng}/${latitude},${longitude}`;
+            directionsLink.style.display = 'inline'; // Show the link
+            document.getElementById("demo").innerHTML = "Your location is ready. Click the link to get directions.";
         }
     </script>
 </body>
