@@ -6,35 +6,35 @@
     <title>Get Current Location</title>
 </head>
 <body>
-    <h1>Click the button to get your current location:</h1>
-    <button onclick="getLocation()">Get Location</button>
+    <h1>怎麼去101，我教你阿!!:</h1>
+    <button onclick="getDirections()">Get Directions</button>
 
     <p id="demo"></p>
 
-    <a id="directionsLink" href="" target="_blank">Get Directions to Your Location</a>
-
     <script>
-        function getLocation() {
+        function getDirections() {
             if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(showPosition);
+                navigator.geolocation.getCurrentPosition(function(position) {
+                    var latitude = position.coords.latitude;
+                    var longitude = position.coords.longitude;
+
+                    // Set the other person's location (101 Building)
+                    var otherPersonLat = 25.033964;
+                    var otherPersonLng = 121.564472;
+
+                    // Create the directions link
+                    var directionsLink = `https://www.google.com/maps/dir/${otherPersonLat},${otherPersonLng}/${latitude},${longitude}`;
+                    
+                    // Open the directions link in a new tab
+                    window.open(directionsLink, '_blank');
+
+                    document.getElementById("demo").innerHTML = "Directions opened in a new tab.";
+                }, function(error) {
+                    document.getElementById("demo").innerHTML = "Error occurred while getting your location: " + error.message;
+                });
             } else {
                 document.getElementById("demo").innerHTML = "Geolocation is not supported by this browser.";
             }
-        }
-
-        function showPosition(position) {
-            var latitude = position.coords.latitude;
-            var longitude = position.coords.longitude;
-
-            // Set the other person's location (101 Building)
-            var otherPersonLat = 25.033964;
-            var otherPersonLng = 121.564472;
-
-            // Create the directions link
-            var directionsLink = document.getElementById("directionsLink");
-            directionsLink.href = `https://www.google.com/maps/dir/${otherPersonLat},${otherPersonLng}/${latitude},${longitude}`;
-            directionsLink.style.display = 'inline'; // Show the link
-            document.getElementById("demo").innerHTML = "Your location is ready. Click the link to get directions.";
         }
     </script>
 </body>
